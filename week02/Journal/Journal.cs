@@ -1,31 +1,61 @@
-using System;
+using System.IO;
 
 class Journal
 {
     List<Entry> _entries = [];
 
-    void AddEntry(Entry newEntry)
+    public void AddEntry(string date, string prompt, string entryText)
     {
+        Entry newEntry = new()
+        {
+            _date = date,
+            _promptText = prompt,
+            _entryText = entryText
+        };
+
         _entries.Add(newEntry);
     }
-    void DeleteEntry(int entryNumber)
+    public void EditEntry(int entryNumber, string entryText)
+    {
+          _entries[entryNumber - 1]._entryText = entryText; // -1 so it matches the index because the entries will be displayed starting at #1
+    }
+    public void DeleteEntry(int entryNumber)
     {
         _entries.RemoveAt(entryNumber - 1); // -1 so it matches the index because the entries will be displayed starting at #1
     }
-    void DisplayAll()
+    public void DisplayAll()
     {
         for (int i = 0; i < _entries.Count; i++)
             {
-                Console.WriteLine($"#{i + 1}.");
+                Console.WriteLine($"Entry #{i + 1}.");
                 _entries[i].Display();
             }
     }
-    void SaveToFile(string fileName)
+    public void SaveToFile(string givenFileName)
     {
-        
+        string fileName = givenFileName;
+        using StreamWriter outputFile = new(fileName);
+        foreach (var entry in _entries)
+        {
+            outputFile.WriteLine($"{entry._date}|{entry._promptText}|{entry._entryText}");
+        }
     }
-    void LoadFromFile(string fileName)
+    public void LoadFromFile(string fileName)
     {
-        
+        _entries.Clear();
+        using StreamReader loadingFile = new(fileName);
+        string line  = loadingFile.ReadLine();
+        while (line != null)
+        {
+            string[] parts = line.Split('|');
+            Entry entry = new()
+            {
+                _date = parts[0],
+                _promptText = parts[1],
+                _entryText = parts[2]
+            };
+            _entries.Add(entry);
+            line = loadingFile.ReadLine();
+        }
     }
 }
