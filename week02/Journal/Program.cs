@@ -1,4 +1,6 @@
 using System;
+// added an edit and delete entry menu option.
+// added functionality to limit the amount of duplicate prompts a user gets in one session by storing the last prompt
 
 class Program
 {
