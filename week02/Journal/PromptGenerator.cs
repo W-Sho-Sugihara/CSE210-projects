@@ -15,9 +15,19 @@ class PromptGenerator
         "What is one goal I want to focus on tomorrow?"
     ];
 
-     public string GetRandomPrompt()
+    string _lastPrompt = "";
+
+    public string GetRandomPrompt()
     {
         Random random = new();
-        return _prompts[random.Next(_prompts.Count)];
+        string prompt;
+
+        do
+        {
+            prompt = _prompts[random.Next(_prompts.Count)];
+        } while (prompt == _lastPrompt);
+
+        _lastPrompt = prompt;
+        return prompt;
     }
 }
