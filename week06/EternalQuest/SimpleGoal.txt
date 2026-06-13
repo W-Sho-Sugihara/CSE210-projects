@@ -1,0 +1,4 @@
+Run a marathon,Complete a full 26.2 mile marathon,1000,True
+Read 12 books,Read one book per month for a year,500,True
+Learn to cook,Cook 5 new recipes from scratch,300,False
+Lose 5 pounds.,Lose Weight by cutting calories and doing resistance training.,3000,True
